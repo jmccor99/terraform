@@ -20,4 +20,8 @@ Creates ingress/egress on the public and private network ACLs to allow all traff
 
 Creates a public security group and private security group.
 
+cd terraform\account\lab\vpc
 
+terraform init
+terraform plan
+terraform apply
