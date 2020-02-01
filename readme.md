@@ -14,7 +14,7 @@ Creates a route to the availablity zone nat gateway on each of the private route
 
 Creates a public network ACL and associates the public subnet in each availability zone in the eu-west-2 region.
 
-Creates a private network ACL and associates the public subnet in each availability zone in the eu-west-2 region.
+Creates a private network ACL and associates the private subnet in each availability zone in the eu-west-2 region.
 
 Creates ingress/egress on the public and private network ACLs to allow all traffic/ports.
 
