@@ -1,6 +1,6 @@
 resource "aws_network_acl" "public" {
-  vpc_id        = aws_vpc.this.id
-  subnet_ids    = aws_subnet.public.*.id
+  vpc_id        = var.vpc_id
+  subnet_ids    = var.public_subnets
 
   ingress {
     protocol   = -1
@@ -25,8 +25,8 @@ resource "aws_network_acl" "public" {
 }
 
 resource "aws_network_acl" "private" {
-  vpc_id        = aws_vpc.this.id
-  subnet_ids    = aws_subnet.private.*.id
+  vpc_id        = var.vpc_id
+  subnet_ids    = var.private_subnets
 
   ingress {
     protocol   = -1

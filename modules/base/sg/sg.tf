@@ -1,5 +1,5 @@
 resource "aws_security_group" "public" {
-  vpc_id       = aws_vpc.this.id
+  vpc_id       = var.vpc_id
   name         = "Public security group"
   description  = "Public security group"
   
@@ -37,7 +37,7 @@ resource "aws_security_group" "public" {
 }
 
 resource "aws_security_group" "private" {
-  vpc_id       = aws_vpc.this.id
+  vpc_id       = var.vpc_id
   name         = "Private security group"
   description  = "Private security group"
   

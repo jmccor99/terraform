@@ -1,7 +1,45 @@
 module "vpc" {
-  source = "../../../modules/base/vpc"
-  cidr = "10.0.0.0/16"
-  azs             = ["eu-west-2a", "eu-west-2b", "eu-west-2c"]
-  private_subnets = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
-  public_subnets  = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
+  source               = "../../../modules/base/vpc"
+  cidr                 = var.cidr
+  enable_dns_support   = var.enable_dns_support
+  enable_dns_hostnames = var.enable_dns_hostnames
+  vpc_name             = var.vpc_name
+}
+
+module "subnet" {
+  source               = "../../../modules/base/subnet"
+  vpc_id               = module.vpc.vpc_id
+  azs                  = var.azs
+  private_subnets      = var.private_subnets
+  public_subnets       = var.public_subnets
+}
+
+module "igw" {
+  source               = "../../../modules/base/igw"
+  vpc_id               = module.vpc.vpc_id
+  cidr                 = var.cidr
+  public_subnets       = module.subnet.subnet_public_ids
+}
+
+module "ngw" {
+  source               = "../../../modules/base/ngw"
+  vpc_id               = module.vpc.vpc_id
+  azs                  = var.azs
+  cidr                 = var.cidr
+  public_subnets       = module.subnet.subnet_public_ids
+  private_subnets      = module.subnet.subnet_private_ids
+}
+
+module "nacl" {
+  source               = "../../../modules/base/nacl"
+  vpc_id               = module.vpc.vpc_id
+  public_subnets       = module.subnet.subnet_public_ids
+  private_subnets      = module.subnet.subnet_private_ids
+}
+
+module "sg" {
+  source               = "../../../modules/base/sg"
+  vpc_id               = module.vpc.vpc_id
+  private_subnets      = var.private_subnets
+  public_subnets       = var.public_subnets
 }

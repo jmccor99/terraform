@@ -2,23 +2,22 @@ resource "aws_eip" "public" {
   count         = length(var.public_subnets)
   vpc           = true
   tags = {
-    Name = "${aws_subnet.public.*.availability_zone[count.index]}"
+    Name = "${var.azs[count.index]}"
   }
 }
 
 resource "aws_nat_gateway" "ngw" {
   count         = length(var.public_subnets)
   allocation_id = aws_eip.public.*.id[count.index]
-  subnet_id     = aws_subnet.public.*.id[count.index]
-  depends_on    = [aws_subnet.public]
+  subnet_id     = var.public_subnets.*[count.index]
   tags = {
-    Name = "${aws_subnet.public.*.availability_zone[count.index]}"
+    Name = "${var.azs[count.index]}"
   }
 }
 
 resource "aws_route_table" "private" {
   count  = length(var.azs)
-  vpc_id = aws_vpc.this.id
+  vpc_id = var.vpc_id
   tags = {
     Name = "${var.azs[count.index]}"
   }
@@ -37,11 +36,6 @@ resource "aws_route" "private" {
 
 resource "aws_route_table_association" "private" {
   count          = length(var.private_subnets)
-  subnet_id      = aws_subnet.private.*.id[count.index]
+  subnet_id      = var.private_subnets.*[count.index]
   route_table_id = aws_route_table.private.*.id[count.index]
-
-  depends_on = [
-    aws_subnet.private,
-    aws_route_table.private,
-  ]
 }
