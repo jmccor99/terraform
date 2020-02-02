@@ -23,5 +23,7 @@ Creates a public security group and private security group.
 cd terraform\account\lab\vpc
 
 terraform init
+
 terraform plan
+
 terraform apply
