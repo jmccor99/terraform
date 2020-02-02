@@ -1,4 +1,4 @@
-# Simple AWS VPC setup using Terraform
+# AWS VPC setup using Terraform
 
 Creates a single VPC with a public and private subnet in each availability zone in the eu-west-2 region.
 
