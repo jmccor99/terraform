@@ -43,3 +43,15 @@ module "sg" {
   private_subnets      = var.private_subnets
   public_subnets       = var.public_subnets
 }
+
+module "sns" {
+  source               = "../../../modules/base/sns"
+}
+
+module "ec2" {
+  source                     = "../../../modules/base/ec2"
+  public_subnets             = module.subnet.subnet_public_ids
+  private_subnets            = module.subnet.subnet_private_ids
+  public_security_group_id   = module.sg.public_security_group_id
+  private_security_group_id  = module.sg.private_security_group_id
+}
