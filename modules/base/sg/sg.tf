@@ -14,12 +14,19 @@ resource "aws_security_group" "public" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = var.public_subnets
+    cidr_blocks = ["0.0.0.0/0"]
   }
   
   ingress {
-    from_port   = 443
-    to_port     = 443
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = var.public_subnets
+  } 
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
     protocol    = "tcp"
     cidr_blocks = var.public_subnets
   } 
@@ -45,28 +52,14 @@ resource "aws_security_group" "private" {
     to_port     = 22
     protocol    = "tcp"
     cidr_blocks = var.public_subnets
-  } 
-  
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = var.public_subnets
-  }
-  
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = var.public_subnets
   }
 
-    ingress {
+  ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = var.public_subnets
-  } 
+    cidr_blocks = var.private_subnets
+  }
   
   ingress {
     from_port   = 80
@@ -74,13 +67,6 @@ resource "aws_security_group" "private" {
     protocol    = "tcp"
     cidr_blocks = var.private_subnets
   }
-  
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = var.private_subnets
-  } 
 
   egress {
     from_port   = 0
