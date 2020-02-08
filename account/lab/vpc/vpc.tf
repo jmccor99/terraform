@@ -72,5 +72,11 @@ module "apigw" {
 }
 
 module "sns" {
-  source               = "../../../modules/base/sns"
+  source                     = "../../../modules/base/sns"
+}
+
+module "vpcep" {
+  source                         = "../../../modules/base/vpcep"
+  vpc_id                         = module.vpc.vpc_id
+  aws_route_table_private_ids    = module.ngw.aws_route_table_private_ids
 }

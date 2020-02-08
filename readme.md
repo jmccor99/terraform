@@ -18,6 +18,7 @@
  - Creates an api gateway with a lambda proxy integration.
  - Create an SNS topic with an SQS endpoint queue.
  - Associates the public and private security groups to the EC2 instances.
+ - Creates a VPC endpoint gateway to S3 in the eu-west-2 region and adds a route to the private subnet route tables.
 
 ```bash
 cd ~\terraform\account\lab\vpc
