@@ -32,7 +32,6 @@ resource "aws_security_group" "public" {
   }
    tags = {
      Name = "Public security group"
-     Description = "Public security group"
   }
 }
 
@@ -91,6 +90,5 @@ resource "aws_security_group" "private" {
   }
    tags = {
      Name = "Private security group"
-     Description = "Private security group"
   }
 }

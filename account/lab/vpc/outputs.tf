@@ -21,3 +21,7 @@ output "subnet_public_ids" {
 output "subnet_private_ids" {
     value = module.subnet.subnet_private_ids
 }
+
+output "prod_url" {
+  value = module.apigw.prod_url
+}

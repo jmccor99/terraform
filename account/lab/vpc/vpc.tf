@@ -44,14 +44,33 @@ module "sg" {
   public_subnets       = var.public_subnets
 }
 
-module "sns" {
-  source               = "../../../modules/base/sns"
-}
-
 module "ec2" {
   source                     = "../../../modules/base/ec2"
   public_subnets             = module.subnet.subnet_public_ids
   private_subnets            = module.subnet.subnet_private_ids
   public_security_group_id   = module.sg.public_security_group_id
   private_security_group_id  = module.sg.private_security_group_id
+}
+
+module "nlb" {
+  source                     = "../../../modules/base/nlb"
+  vpc_id                     = module.vpc.vpc_id
+  public_subnets             = module.subnet.subnet_public_ids
+  private_subnets            = module.subnet.subnet_private_ids
+  public_ec2_id              = module.ec2.public_ec2_id
+  private_ec2_id             = module.ec2.private_ec2_id
+}
+
+module "lambda" {
+  source                     = "../../../modules/base/lambda"
+}
+
+module "apigw" {
+  source                     = "../../../modules/base/apigw"
+  lambda_invoke_arn          = module.lambda.lambda_invoke_arn
+  lambda_function_name       = module.lambda.lambda_function_name
+}
+
+module "sns" {
+  source               = "../../../modules/base/sns"
 }

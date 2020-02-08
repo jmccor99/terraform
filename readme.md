@@ -20,6 +20,14 @@ Creates ingress/egress on the public and private network ACLs to allow all traff
 
 Creates a public security group and private security group.
 
+Creates an EC2 instance in each of the public and private subnets using the Amazon Linux ami.
+
+Creates a public and private NLB with a TCP port 80 listener and target group using the EC2 instances.
+
+Creates an api gateway with a lambda proxy integration.
+
+Create an SNS topic with an SQS endpoint queue.
+
 cd terraform\account\lab\vpc
 
 terraform init
