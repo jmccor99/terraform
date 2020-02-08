@@ -1,5 +1,7 @@
 # AWS VPC setup using Terraform
 
+![VPC](vpc.png)
+
  - Creates a single VPC with a public and private subnet in each availability zone in the eu-west-2 region.
  - Creates a VPC internet gateway and an eip/nat gateway for each availability zone in the eu-west-2 region.
  - Creates a single public route table and associates the public subnet of each availability zone in the eu-west-2 region.
@@ -11,6 +13,7 @@
  - Creates ingress/egress on the public and private network ACLs to allow all traffic/ports.
  - Creates a public security group and private security group.
  - Creates an Amazon Linux EC2 instance with 10 GB std EBS volume in the public and private subnet of each availability zone in the eu-west-2 region.
+ - Creates an http server in each of the EC2 instances using EC2 user data script
  - Creates a public and private NLB with a TCP port 80 listener and target group using the EC2 instances.
  - Creates an api gateway with a lambda proxy integration.
  - Create an SNS topic with an SQS endpoint queue.
