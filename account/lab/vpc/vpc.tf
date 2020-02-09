@@ -80,3 +80,12 @@ module "vpcep" {
   vpc_id                         = module.vpc.vpc_id
   aws_route_table_private_ids    = module.ngw.aws_route_table_private_ids
 }
+
+module "nat" {
+  source                      = "int128/nat-instance/aws"
+  name                        = "main"
+  vpc_id                      = module.vpc.vpc_id
+  public_subnet               = module.subnet.subnet_public_ids[0]
+  private_subnets_cidr_blocks = var.private_subnets
+  private_route_table_ids     = module.ngw.aws_route_table_private_ids
+}

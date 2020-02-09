@@ -3,7 +3,7 @@
 ![VPC](vpc.png)
 
  - Creates a single VPC with a public and private subnet in each availability zone in the eu-west-2 region.
- - Creates a VPC internet gateway and an eip/nat gateway for each availability zone in the eu-west-2 region.
+ - Creates a VPC internet gateway and (an eip/nat gateway) swapped out for nat instance to save money for each availability zone in the eu-west-2 region.
  - Creates a single public route table and associates the public subnet of each availability zone in the eu-west-2 region.
  - Creates multiple private route tables and associates the private subnet of each availability zone in the eu-west-2 region.
  - Creates a route to the VPC internet gateway on the single public route table.
