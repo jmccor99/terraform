@@ -52,3 +52,39 @@ resource "aws_lambda_function" "test_lambda" {
   filename      = "${path.module}/package.zip"
   publish       = true
 }
+
+resource "aws_cloudwatch_log_metric_filter" "test_lambda" {
+  name           = "test_lambda_error"
+  log_group_name = "/aws/lambda/test"
+  pattern = "Error"
+
+    metric_transformation {
+    name      = "ErrorCount"
+    namespace = "test_lambda"
+    value     = "1"
+  }
+}
+
+resource "aws_sns_topic" "alarms" {
+  name = "test-alarms"
+}
+
+resource "aws_cloudwatch_metric_alarm" "test_lambda" {
+  alarm_name          = "test_lambda"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "1"
+  metric_name         = "ErrorCount"
+  namespace           = "test_lambda"
+  period              = "10"
+  statistic           = "Maximum"
+  threshold           = "1"
+  alarm_description   = "test_lambda_error"
+  treat_missing_data  = "ignore"
+
+  alarm_actions = [aws_sns_topic.alarms.arn]
+
+  dimensions {
+    FunctionName = aws_lambda_function.test_lambda.function_name
+    Resource     = aws_lambda_function.test_lambda.function_name
+  }
+}
