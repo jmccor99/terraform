@@ -80,11 +80,6 @@ resource "aws_cloudwatch_metric_alarm" "test_lambda" {
   threshold           = "1"
   alarm_description   = "test_lambda_error"
   treat_missing_data  = "ignore"
+  alarm_actions       = [aws_sns_topic.alarms.arn]
 
-  alarm_actions = [aws_sns_topic.alarms.arn]
-
-  dimensions {
-    FunctionName = aws_lambda_function.test_lambda.function_name
-    Resource     = aws_lambda_function.test_lambda.function_name
-  }
 }
