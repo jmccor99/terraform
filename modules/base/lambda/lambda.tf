@@ -76,7 +76,7 @@ resource "aws_cloudwatch_metric_alarm" "test_lambda" {
   metric_name         = "ErrorCount"
   namespace           = "test_lambda"
   period              = "10"
-  statistic           = "Maximum"
+  statistic           = "Sum"
   threshold           = "1"
   alarm_description   = "test_lambda_error"
   treat_missing_data  = "ignore"
