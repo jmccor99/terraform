@@ -79,7 +79,7 @@ resource "aws_cloudwatch_metric_alarm" "test_lambda" {
   statistic           = "Sum"
   threshold           = "1"
   alarm_description   = "test_lambda_error"
-  treat_missing_data  = "good"
+  treat_missing_data  = "notBreaching"
   alarm_actions       = [aws_sns_topic.alarms.arn]
 }
 
