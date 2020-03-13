@@ -81,5 +81,11 @@ resource "aws_cloudwatch_metric_alarm" "test_lambda" {
   alarm_description   = "test_lambda_error"
   treat_missing_data  = "ignore"
   alarm_actions       = [aws_sns_topic.alarms.arn]
+}
 
+resource "aws_sns_topic_subscription" "pagerduty" {
+  endpoint               = "https://events.pagerduty.com/integration/09f194d2af3d47b392f907d698be37b0/enqueue"
+  endpoint_auto_confirms = true
+  protocol               = "https"
+  topic_arn              = aws_sns_topic.alarm.arn
 }
